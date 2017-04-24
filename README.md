@@ -1,2 +1,0 @@
-# miTenderoApp
-Tibuo miTendero App
