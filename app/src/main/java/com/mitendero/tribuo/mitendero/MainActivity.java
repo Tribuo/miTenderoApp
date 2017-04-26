@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(VentasActivity.class);
     }
 
+    public void launchScanActivity(View v) {
+        launchActivity(VentasActivity.class);
+    }
+
     public void launchActivity(Class<?> clss) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {

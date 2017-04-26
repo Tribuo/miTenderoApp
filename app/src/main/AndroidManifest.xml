@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VentasActivity"></activity>
+        <activity android:name=".VentasActivity" />
+        <activity android:name=".ScannerActivity"></activity>
     </application>
 
 </manifest>
