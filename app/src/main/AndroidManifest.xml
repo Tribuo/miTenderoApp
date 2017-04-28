@@ -20,6 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Scanner.ScannerActivity" />
-    </application>
+        </application>
 
 </manifest>

@@ -1,13 +1,18 @@
 package com.mitendero.tribuo.mitendero.Scanner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mitendero.tribuo.mitendero.R;
+import com.mitendero.tribuo.mitendero.fragments.VentasFragment;
 import com.mitendero.tribuo.mitendero.jpa.Productos;
 
 import org.json.JSONObject;
@@ -20,6 +25,7 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class ScannerActivity extends BaseScannerActivity implements ZBarScannerView.ResultHandler {
 
+    private FragmentManager fragmentManager;
 
     private ZBarScannerView mScannerView;
     private FloatingActionButton fab;
@@ -38,6 +44,11 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
         scannedList = new ArrayList<>();
 
         scannerThread = new ScannerThread();
+
+        fragmentManager = getSupportFragmentManager();
+
+        fab = (FloatingActionButton) findViewById(R.id.finish_btn);
+
 
     }
 
@@ -80,6 +91,12 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
             e.printStackTrace();
         }
     }
+
+    public void returnToVentas (View v) {
+        fragmentManager.beginTransaction().replace(R.id.viewpager, new VentasFragment()).commit();
+
+    }
+
 
 
 }
