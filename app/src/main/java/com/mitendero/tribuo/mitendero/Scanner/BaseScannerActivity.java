@@ -1,16 +1,18 @@
-package com.mitendero.tribuo.mitendero;
+package com.mitendero.tribuo.mitendero.Scanner;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.mitendero.tribuo.mitendero.R;
+
 public class BaseScannerActivity extends AppCompatActivity {
     public void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
-        if(ab != null) {
+        if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
     }

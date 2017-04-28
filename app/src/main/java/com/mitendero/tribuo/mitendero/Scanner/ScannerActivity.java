@@ -1,13 +1,15 @@
-package com.mitendero.tribuo.mitendero;
+package com.mitendero.tribuo.mitendero.Scanner;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.json.JSONException;
+import com.google.gson.Gson;
+import com.mitendero.tribuo.mitendero.R;
+import com.mitendero.tribuo.mitendero.jpa.Productos;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
 
     private ZBarScannerView mScannerView;
     private FloatingActionButton fab;
-    private ArrayList<String> scannedList;
+    private ArrayList<Productos> scannedList;
     private ScannerThread scannerThread;
 
     @Override
@@ -37,13 +39,6 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
 
         scannerThread = new ScannerThread();
 
-        fab = (FloatingActionButton) findViewById(R.id.finish_btn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -61,21 +56,16 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
 
     @Override
     public void handleResult(Result rawResult) {
-        scannerThread.setCt(ScannerActivity.this);
 
         try {
+            Toast.makeText(this, "Retrieving data...", Toast.LENGTH_SHORT).show();
             JSONObject jsonObject = null;
-            String s = scannerThread.execute(rawResult.getContents()).get();
-            try {
-                jsonObject = new JSONObject(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(this, jsonObject.toString(), Toast.LENGTH_SHORT).show();
-            // Note:
-            // * Wait 2 seconds to resume the preview.
-            // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-            // * I don't know why this is the case but I don't have the time to figure out.
+            String jsonString = scannerThread.execute(rawResult.getContents()).get();
+            Gson gson = new Gson();
+            Productos p = gson.fromJson(jsonString, Productos.class);
+            scannedList.add(p);
+            Toast.makeText(this, p.getNombreProducto(), Toast.LENGTH_SHORT).show();
+
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

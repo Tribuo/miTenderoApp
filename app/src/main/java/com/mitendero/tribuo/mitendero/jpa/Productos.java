@@ -1,4 +1,4 @@
-package com.mitendero.tribuo.mitendero.JPA;
+package com.mitendero.tribuo.mitendero.jpa;
 // Generated Apr 14, 2017 8:01:04 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
@@ -58,7 +58,6 @@ public class Productos implements java.io.Serializable {
         this.idProducto = idProducto;
     }
 
-
     public Marcas getMarcas() {
         return this.marcas;
     }
@@ -75,7 +74,6 @@ public class Productos implements java.io.Serializable {
     public void setPresentaciones(Presentaciones presentaciones) {
         this.presentaciones = presentaciones;
     }
-
 
     public Subcategorias getSubcategorias() {
         return this.subcategorias;
@@ -133,7 +131,6 @@ public class Productos implements java.io.Serializable {
         this.ventases = ventases;
     }
 
-
     public Set<Compras> getComprases() {
         return this.comprases;
     }
@@ -141,7 +138,6 @@ public class Productos implements java.io.Serializable {
     public void setComprases(Set<Compras> comprases) {
         this.comprases = comprases;
     }
-
 
     public Set<ProductosTiendas> getProductosTiendases() {
         return this.productosTiendases;

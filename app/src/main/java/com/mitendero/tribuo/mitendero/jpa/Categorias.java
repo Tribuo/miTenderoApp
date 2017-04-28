@@ -1,4 +1,4 @@
-package com.mitendero.tribuo.mitendero.JPA;
+package com.mitendero.tribuo.mitendero.jpa;
 // Generated Apr 14, 2017 8:01:04 PM by Hibernate Tools 4.3.1
 
 
@@ -19,7 +19,6 @@ public class Categorias implements java.io.Serializable {
     public Categorias() {
     }
 
-
     public Categorias(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
@@ -29,7 +28,6 @@ public class Categorias implements java.io.Serializable {
         this.subcategoriases = subcategoriases;
     }
 
-
     public Integer getIdCategoria() {
         return this.idCategoria;
     }
@@ -37,7 +35,6 @@ public class Categorias implements java.io.Serializable {
     public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
-
 
     public String getNombreCategoria() {
         return this.nombreCategoria;

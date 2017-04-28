@@ -1,4 +1,4 @@
-package com.mitendero.tribuo.mitendero.JPA;
+package com.mitendero.tribuo.mitendero.jpa;
 // Generated Apr 14, 2017 8:01:04 PM by Hibernate Tools 4.3.1
 
 
@@ -22,7 +22,6 @@ public class Tiendas implements java.io.Serializable {
     public Tiendas() {
     }
 
-
     public Tiendas(User user, int cedula, String razonSocial) {
         this.user = user;
         this.cedula = cedula;
@@ -36,7 +35,6 @@ public class Tiendas implements java.io.Serializable {
         this.razonSocial = razonSocial;
         this.sucursaleses = sucursaleses;
     }
-
 
     public Integer getIdTienda() {
         return this.idTienda;
@@ -54,7 +52,6 @@ public class Tiendas implements java.io.Serializable {
         this.user = user;
     }
 
-
     public Integer getNit() {
         return this.nit;
     }
@@ -63,7 +60,6 @@ public class Tiendas implements java.io.Serializable {
         this.nit = nit;
     }
 
-
     public int getCedula() {
         return this.cedula;
     }
@@ -71,7 +67,6 @@ public class Tiendas implements java.io.Serializable {
     public void setCedula(int cedula) {
         this.cedula = cedula;
     }
-
 
     public String getRazonSocial() {
         return this.razonSocial;
@@ -88,7 +83,6 @@ public class Tiendas implements java.io.Serializable {
     public void setSucursaleses(Set<Sucursales> sucursaleses) {
         this.sucursaleses = sucursaleses;
     }
-
 
 }
 

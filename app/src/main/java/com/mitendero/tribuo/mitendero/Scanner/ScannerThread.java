@@ -1,7 +1,5 @@
-package com.mitendero.tribuo.mitendero;
+package com.mitendero.tribuo.mitendero.Scanner;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -20,17 +18,6 @@ public class ScannerThread extends AsyncTask<String, Integer, String> {
     //private static String URLhead = "http://tribuo-startup.herokuapp.com/";
 
     private static String URLtail = "productos/codigo/";
-
-    private Context ct;
-    private ProgressDialog progress;
-
-    @Override
-    protected void onPreExecute() {
-        progress = new ProgressDialog(ct);
-        progress.setMessage("Loading");
-        progress.show();
-    }
-
 
     @Override
     protected String doInBackground(String... params) {
@@ -65,12 +52,4 @@ public class ScannerThread extends AsyncTask<String, Integer, String> {
 
     }
 
-    @Override
-    protected void onPostExecute(String result) {
-        progress.dismiss();
-    }
-
-    public void setCt(Context ct) {
-        this.ct = ct;
-    }
 }

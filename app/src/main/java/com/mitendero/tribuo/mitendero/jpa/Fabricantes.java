@@ -1,4 +1,4 @@
-package com.mitendero.tribuo.mitendero.JPA;
+package com.mitendero.tribuo.mitendero.jpa;
 // Generated Apr 14, 2017 8:01:04 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;

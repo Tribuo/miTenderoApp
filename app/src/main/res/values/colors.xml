@@ -3,7 +3,7 @@
     <color name="actionbar_opacity">#33000000</color>
     <color name="primary">#000000ff</color>
     <color name="primary_dark">#303f9f</color>
-    <color name="primary_light">#C5CAE9</color>
+    <color name="primary_light">#c5cae9</color>
     <color name="accent">#E040FB</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>

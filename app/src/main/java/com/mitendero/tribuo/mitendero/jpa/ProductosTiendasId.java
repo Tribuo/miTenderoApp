@@ -1,4 +1,4 @@
-package com.mitendero.tribuo.mitendero.JPA;
+package com.mitendero.tribuo.mitendero.jpa;
 // Generated Apr 14, 2017 8:01:04 PM by Hibernate Tools 4.3.1
 
 
@@ -18,7 +18,6 @@ public class ProductosTiendasId implements java.io.Serializable {
         this.nitSucursal = nitSucursal;
         this.idProducto = idProducto;
     }
-
 
     public int getNitSucursal() {
         return this.nitSucursal;
@@ -53,7 +52,6 @@ public class ProductosTiendasId implements java.io.Serializable {
         result = 37 * result + this.getIdProducto();
         return result;
     }
-
 
 }
 
