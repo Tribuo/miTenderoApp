@@ -1,17 +1,34 @@
 package com.mitendero.tribuo.mitendero.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.mitendero.tribuo.mitendero.R;
 import com.mitendero.tribuo.mitendero.Scanner.ScannerActivity;
+import com.mitendero.tribuo.mitendero.jpa.Categorias;
+import com.mitendero.tribuo.mitendero.jpa.Fabricantes;
+import com.mitendero.tribuo.mitendero.jpa.Marcas;
+import com.mitendero.tribuo.mitendero.jpa.Presentaciones;
+import com.mitendero.tribuo.mitendero.jpa.Productos;
+import com.mitendero.tribuo.mitendero.jpa.Subcategorias;
+
+import java.util.ArrayList;
 
 public class VentasFragment extends Fragment {
+
+    public static ArrayList<Productos> listaProductos;
+    private static Context context;
+    private ListView listView;
+    private static VentasAdapter ventasAdapter;
+
 
     public VentasFragment() {
     }
@@ -20,12 +37,28 @@ public class VentasFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_ventas, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        ConstraintLayout ll = (ConstraintLayout) inflater.inflate(R.layout.fragment_ventas, container, false);
+
+        listView = (ListView) ll.findViewById(R.id.list_prod_venta);
+
+        listaProductos = new ArrayList<>();
+
+
+
+        VentasFragment.context = getContext();
+
+        ventasAdapter = new VentasAdapter(listaProductos, getContext());
+
+        listView.setAdapter(ventasAdapter);
+        dummyList();
+        return ll;
+
     }
 
     public void launchScanActivity(View v) {
@@ -33,5 +66,16 @@ public class VentasFragment extends Fragment {
         startActivity(intent);
     }
 
-
+    private void dummyList() {
+        Fabricantes fabricantes = new Fabricantes("Babaria");
+        Marcas marcas = new Marcas(fabricantes, "Club Colombia");
+        Categorias categorias = new Categorias("Babidas");
+        Subcategorias subcategorias = new Subcategorias(categorias, "Alcoholicas");
+        Presentaciones presentaciones = new Presentaciones(330, "mL");
+        Productos productos = new Productos(marcas, presentaciones, subcategorias, "Club Colombia Negra", "7702004003775", "Cerveza");
+        productos.setPrecioSugerido(2500);
+        productos.setIdProducto(1);
+        listaProductos.add(productos);
+        listaProductos.add(productos);
+    }
 }

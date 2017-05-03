@@ -1,21 +1,20 @@
 package com.mitendero.tribuo.mitendero.Scanner;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import com.google.gson.Gson;
+import com.mitendero.tribuo.mitendero.MainActivity;
 import com.mitendero.tribuo.mitendero.R;
-import com.mitendero.tribuo.mitendero.fragments.VentasFragment;
 import com.mitendero.tribuo.mitendero.jpa.Productos;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -31,6 +30,9 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
     private FloatingActionButton fab;
     private ArrayList<Productos> scannedList;
     private ScannerThread scannerThread;
+    private ImageButton torch_btn;
+    private boolean isTorchOn;
+    private Snackbar mySnackbar;
 
     @Override
     public void onCreate(Bundle state) {
@@ -43,12 +45,14 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
 
         scannedList = new ArrayList<>();
 
-        scannerThread = new ScannerThread();
 
         fragmentManager = getSupportFragmentManager();
 
         fab = (FloatingActionButton) findViewById(R.id.finish_btn);
 
+        isTorchOn = false;
+
+        torch_btn = (ImageButton) findViewById(R.id.torch_btn);
 
     }
 
@@ -65,36 +69,72 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
         mScannerView.stopCamera();
     }
 
+
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(final Result rawResult) {
+        mySnackbar = Snackbar.make(mScannerView, "Retrieving data", Snackbar.LENGTH_LONG);
+        mySnackbar.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                retrieveData(rawResult.getContents());
+            }
+        }, 500);
 
-        try {
-            Toast.makeText(this, "Retrieving data...", Toast.LENGTH_SHORT).show();
-            JSONObject jsonObject = null;
-            String jsonString = scannerThread.execute(rawResult.getContents()).get();
-            Gson gson = new Gson();
-            Productos p = gson.fromJson(jsonString, Productos.class);
-            scannedList.add(p);
-            Toast.makeText(this, p.getNombreProducto(), Toast.LENGTH_SHORT).show();
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mScannerView.resumeCameraPreview(ScannerActivity.this);
-                }
-            }, 2000);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mScannerView.resumeCameraPreview(ScannerActivity.this);
+            }
+        }, 2000);
     }
 
-    public void returnToVentas (View v) {
-        fragmentManager.beginTransaction().replace(R.id.viewpager, new VentasFragment()).commit();
+    public void returnToVentas(View v) {
+        Intent i = new Intent(ScannerActivity.this, MainActivity.class);
+        startActivity(i);
+    }
 
+    public void toggleFlash(View V) {
+
+        if (isTorchOn) {
+            torch_btn.setImageResource(R.drawable.torch_off);
+        } else {
+            torch_btn.setImageResource(R.drawable.torch_on);
+        }
+        isTorchOn = !isTorchOn;
+        mScannerView.setFlash(isTorchOn);
+    }
+
+
+    private void retrieveData(String barcode) {
+        scannerThread = new ScannerThread();
+        try {
+            //Retrieve from database
+            String jsonString = scannerThread.execute(barcode).get();
+            Gson gson = new Gson();
+            Productos p = gson.fromJson(jsonString, Productos.class);
+
+            scannedList.add(p);
+
+
+            if (p != null) {
+                mySnackbar = Snackbar.make(findViewById(R.id.scanner_layout), p.getNombreProducto(), Snackbar.LENGTH_LONG).setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        scannedList.remove(scannedList.size() - 1);
+                    }
+                });
+                mySnackbar.setActionTextColor(Color.BLUE);
+            } else {
+                mySnackbar = Snackbar.make(mScannerView, "Producto No Registrado", Snackbar.LENGTH_LONG);
+            }
+            mySnackbar.show();
+
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 

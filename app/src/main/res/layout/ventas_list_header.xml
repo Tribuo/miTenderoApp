@@ -1,55 +1,121 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="10dp"
-        android:contentDescription="Property Image" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/infoSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/image"
-        android:orientation="vertical">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        tools:ignore="UselessParent">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/prod_desc_cont"
+            android:layout_width="192dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Street Address"
-            android:textSize="18sp" />
+            android:layout_weight="0.40"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Description"
-            android:textSize="15sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/prod_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="start"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/pricingSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/infoSection"
-        android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:text="@string/precio_unitario"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/tat_presen"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/unit_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                app:layout_constraintLeft_toRightOf="@+id/txt_precio"
+                android:layout_marginLeft="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/tat_presen"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tat_presen"
+                android:layout_width="wrap_content"
+                android:layout_height="12dp"
+                android:text="@string/presentaci_n"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/prod_name" />
+
+            <TextView
+                android:id="@+id/presentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/unit_price"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/prod_name"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@+id/tat_presen"
+                android:layout_marginLeft="2dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <NumberPicker
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:persistentDrawingCache="all"
+            android:soundEffectsEnabled="true" />
 
         <TextView
             android:id="@+id/price"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Price" />
+            android:layout_gravity="center"
+            android:layout_weight="0.60"
+            android:text=""
+            android:textColor="@android:color/holo_green_light" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

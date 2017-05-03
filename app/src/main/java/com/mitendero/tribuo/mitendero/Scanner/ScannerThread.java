@@ -19,6 +19,7 @@ public class ScannerThread extends AsyncTask<String, Integer, String> {
 
     private static String URLtail = "productos/codigo/";
 
+
     @Override
     protected String doInBackground(String... params) {
 
