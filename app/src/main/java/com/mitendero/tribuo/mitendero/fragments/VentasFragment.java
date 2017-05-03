@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mitendero.tribuo.mitendero.R;
 import com.mitendero.tribuo.mitendero.Scanner.ScannerActivity;
@@ -20,7 +21,10 @@ import com.mitendero.tribuo.mitendero.jpa.Presentaciones;
 import com.mitendero.tribuo.mitendero.jpa.Productos;
 import com.mitendero.tribuo.mitendero.jpa.Subcategorias;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class VentasFragment extends Fragment {
 
@@ -29,6 +33,9 @@ public class VentasFragment extends Fragment {
     private ListView listView;
     private static VentasAdapter ventasAdapter;
 
+    static final private String LOCALE = "es_CO";
+
+    private NumberFormat format;
 
     public VentasFragment() {
     }
@@ -50,13 +57,29 @@ public class VentasFragment extends Fragment {
         listaProductos = new ArrayList<>();
 
 
-
         VentasFragment.context = getContext();
 
         ventasAdapter = new VentasAdapter(listaProductos, getContext());
 
         listView.setAdapter(ventasAdapter);
         dummyList();
+
+        int itemsCount = listView.getAdapter().getCount();
+
+        format = NumberFormat.getInstance(new Locale(LOCALE));
+
+        int totalPrice = 0;
+
+        for (int i=0; i < itemsCount; i++){
+            View v = (View) listView.getAdapter().getItem(i);
+            String itemTotal = ((TextView) v.findViewById(R.id.price)).getText().toString();
+            itemTotal.replaceAll(".","");
+            itemTotal.replaceAll("$", "");
+            totalPrice += Integer.getInteger(itemTotal);
+        }
+
+        TextView totalPriceView = (TextView)ll.findViewById(R.id.total_price);
+        totalPriceView.setText("$" + format.format(totalPrice));
         return ll;
 
     }

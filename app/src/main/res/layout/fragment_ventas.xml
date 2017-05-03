@@ -84,4 +84,33 @@
         app:layout_constraintTop_toBottomOf="@+id/tb_ventas_top"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/total"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_ventas_top"
+        app:layout_constraintTop_toTopOf="@+id/tb_ventas_top"
+        app:layout_constraintVertical_bias="0.521"
+        android:layout_marginRight="95dp"
+        app:layout_constraintRight_toRightOf="@+id/tb_ventas_top" />
+
+    <TextView
+        android:id="@+id/total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_ventas_top"
+        app:layout_constraintLeft_toRightOf="@+id/textView"
+        app:layout_constraintRight_toRightOf="@+id/tb_ventas_top"
+        app:layout_constraintTop_toTopOf="@+id/tb_ventas_top"
+        app:layout_constraintVertical_bias="0.521" />
+
 </android.support.constraint.ConstraintLayout>

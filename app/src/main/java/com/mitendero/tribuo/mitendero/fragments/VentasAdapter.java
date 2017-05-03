@@ -37,8 +37,6 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
 
     Context mContext;
 
-    private DecimalFormat df;
-
     private NumberFormat format;
 
     static final private String LOCALE = "es_CO";
@@ -49,7 +47,6 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         super(context, R.layout.ventas_list_header, data);
         this.list = data;
         this.mContext = context;
-        df = new DecimalFormat("0.00");
         format = NumberFormat.getInstance(new Locale(LOCALE));
     }
 
@@ -102,11 +99,12 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
             }
         }
         //remove other occurrences of the same product
-       /** for (int i = position + 1; i < list.size(); i++) {
+        for (int i = position + 1; i < list.size(); i++) {
             if (list.get(i).getIdProducto().equals(item.getIdProducto()))
                 list.remove(i);
-        }**/
 
+        }
+        notifyDataSetChanged();
         holder._quantity.setValue(quantity);
 
         holder._quantity.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -129,5 +127,5 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         TextView _prodName;
     }
 
-
+    
 }

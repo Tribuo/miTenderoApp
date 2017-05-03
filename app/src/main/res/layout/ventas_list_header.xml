@@ -19,7 +19,7 @@
             android:id="@+id/prod_desc_cont"
             android:layout_width="192dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.40"
+            android:layout_weight="0.3"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
@@ -29,12 +29,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:gravity="start"
                 android:textAllCaps="false"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txt_precio"
@@ -42,59 +42,56 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/precio_unitario"
                 android:textAlignment="center"
                 android:textSize="10sp"
-                tools:ignore="SmallSp"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tat_presen"
-                app:layout_constraintVertical_bias="0.0" />
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/unit_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="0dp"
                 android:textSize="8sp"
-                tools:ignore="SmallSp"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_precio"
                 app:layout_constraintLeft_toRightOf="@+id/txt_precio"
-                android:layout_marginLeft="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@+id/tat_presen"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="@+id/txt_precio"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/tat_presen"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/presentaci_n"
                 android:textSize="10sp"
-                tools:ignore="SmallSp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/prod_name" />
+                app:layout_constraintTop_toBottomOf="@+id/prod_name"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/presentation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
                 android:textSize="8sp"
-                tools:ignore="SmallSp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/unit_price"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/prod_name"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/tat_presen"
-                android:layout_marginLeft="2dp" />
+                app:layout_constraintBottom_toBottomOf="@+id/tat_presen"
+                app:layout_constraintLeft_toLeftOf="@+id/unit_price"
+                app:layout_constraintTop_toTopOf="@+id/tat_presen"
+                tools:ignore="SmallSp" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -112,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.60"
+            android:layout_weight="0.70"
             android:text=""
             android:textColor="@android:color/holo_green_light" />
 

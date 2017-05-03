@@ -137,6 +137,8 @@ public class ScannerActivity extends BaseScannerActivity implements ZBarScannerV
         }
     }
 
+    @Override
+    public void onBackPressed(){
 
-
+    }
 }
