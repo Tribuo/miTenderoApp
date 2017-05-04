@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.mitendero.tribuo.mitendero.jpa.Presentaciones;
 import com.mitendero.tribuo.mitendero.jpa.Productos;
 import com.mitendero.tribuo.mitendero.jpa.Subcategorias;
 
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,10 +34,13 @@ public class VentasFragment extends Fragment {
     private static Context context;
     private ListView listView;
     private static VentasAdapter ventasAdapter;
+    public static TextView totalPriceView;
 
     static final private String LOCALE = "es_CO";
 
     private NumberFormat format;
+
+    public static int TOTALPRICE=0;
 
     public VentasFragment() {
     }
@@ -68,18 +73,8 @@ public class VentasFragment extends Fragment {
 
         format = NumberFormat.getInstance(new Locale(LOCALE));
 
-        int totalPrice = 0;
-
-        for (int i=0; i < itemsCount; i++){
-            View v = (View) listView.getAdapter().getItem(i);
-            String itemTotal = ((TextView) v.findViewById(R.id.price)).getText().toString();
-            itemTotal.replaceAll(".","");
-            itemTotal.replaceAll("$", "");
-            totalPrice += Integer.getInteger(itemTotal);
-        }
-
-        TextView totalPriceView = (TextView)ll.findViewById(R.id.total_price);
-        totalPriceView.setText("$" + format.format(totalPrice));
+        totalPriceView = (TextView)ll.findViewById(R.id.total_price);
+        totalPriceView.setText("$" + format.format(TOTALPRICE));
         return ll;
 
     }
@@ -99,6 +94,14 @@ public class VentasFragment extends Fragment {
         productos.setPrecioSugerido(2500);
         productos.setIdProducto(1);
         listaProductos.add(productos);
-        listaProductos.add(productos);
+        Productos productos2 = new Productos(marcas, presentaciones, subcategorias, "Club Colombia Dorada", "7702004003508", "Cerveza");
+        productos2.setPrecioSugerido(2000);
+        productos2.setIdProducto(2);
+        listaProductos.add(productos2);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

@@ -1,6 +1,7 @@
 package com.mitendero.tribuo.mitendero.fragments;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by Camilo Aguado on 4/29/2017.
@@ -50,7 +52,7 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         format = NumberFormat.getInstance(new Locale(LOCALE));
     }
 
-    private  int lastPosition = -1;
+    private int lastPosition = -1;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -88,13 +90,12 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         holder._quantity.setMinValue(minValue);
         holder._quantity.setMaxValue(maxValue);
 
-       /** quantity = list.stream()
-                .filter(c -> item.getIdProducto().equals(c.getIdProducto()))
-                .count();**/
+        /** quantity = list.stream()
+         .filter(c -> item.getIdProducto().equals(c.getIdProducto()))
+         .count();**/
 
-        for (int i = 0; i<list.size();i++){
-            if(list.get(i).getIdProducto()==item.getIdProducto())
-            {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getIdProducto() == item.getIdProducto()) {
                 quantity++;
             }
         }
@@ -105,17 +106,44 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
 
         }
         notifyDataSetChanged();
+
         holder._quantity.setValue(quantity);
+        holder._quantity.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+        holder._quantity.setWrapSelectorWheel(false);
 
         holder._quantity.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                holder._price.setText("$" + format.format(item.getPrecioSugerido() * newVal));
+                int oldTotal = item.getPrecioSugerido() * oldVal;
+                int newTotal = item.getPrecioSugerido() * newVal;
+                int tpint = 0;
+                String tp = VentasFragment.totalPriceView.getText().toString();
+                if (!(tp.equals("") || tp == null)) {
+                    tp = tp.replace(".", "");
+                    tp = tp.replace("$", "");
+                    tpint = Integer.parseInt(tp);
+                }
+
+                tpint = tpint - oldTotal + newTotal;
+
+                VentasFragment.totalPriceView.setText("$" + format.format(tpint));
+                holder._price.setText("$" + format.format(newTotal));
             }
         });
 
-        holder._price.setText("$" + format.format(item.getPrecioSugerido() * holder._quantity.getValue()));
+        int total = item.getPrecioSugerido() * holder._quantity.getValue();
+        holder._price.setText("$" + format.format(total));
+        String tp = VentasFragment.totalPriceView.getText().toString();
+        int tpint = 0;
+        if (!(tp.equals("") || tp == null)) {
+            tp = tp.replace(".", "");
+            tp = tp.replace("$", "");
+            tpint = Integer.parseInt(tp);
 
+        }
+        tpint += total;
+        VentasFragment.totalPriceView.setText("$" + format.format(tpint));
         return convertView;
     }
 
@@ -127,5 +155,5 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         TextView _prodName;
     }
 
-    
+
 }
