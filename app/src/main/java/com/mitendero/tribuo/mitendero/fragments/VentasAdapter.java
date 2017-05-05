@@ -44,12 +44,15 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
     static final private String LOCALE = "es_CO";
     private static int minValue = 1;
     private static int maxValue = 99;
+    private static TextView TOTALP;
+
 
     public VentasAdapter(ArrayList<Productos> data, Context context) {
         super(context, R.layout.ventas_list_header, data);
         this.list = data;
         this.mContext = context;
         format = NumberFormat.getInstance(new Locale(LOCALE));
+
     }
 
     private int lastPosition = -1;
@@ -58,7 +61,7 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Productos item = getItem(position);
-
+        this.TOTALP = VentasFragment.totalPriceView;
         ViewHolder holder;
 
         if (convertView == null) {
@@ -78,30 +81,50 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
 
         lastPosition = position;
 
+
+        //set prduct name view
         holder._prodName.setText(item.getNombreProducto());
 
-        holder._priceUnit.setText("$" + format.format(item.getPrecioSugerido()));
+        //set prduct  unit price view
+        holder._priceUnit.setText(item.getPrecioSugerido().toString());
 
+        //set prduct presentation view
         String presentacion = item.getPresentaciones().getCantidad() + " " + item.getPresentaciones().getUnidadMedida();
         holder._presentation.setText(presentacion);
 
-        int quantity = 0;
+        ////set prduct quantity view
+        setQuantity(position, item, holder);
 
+
+        //set product total price view
+        setPriceView(item, holder);
+
+        return convertView;
+    }
+
+    private void setPriceView(Productos item, ViewHolder holder) {
+        int total = item.getPrecioSugerido() * holder._quantity.getValue();
+        String tp = VentasFragment.totalPriceView.getText().toString();
+        int tpint = getTotalPriceInt();
+        tpint += total;
+        this.TOTALP.setText(""+tpint);
+    }
+
+    private void setQuantity(int position, Productos item, ViewHolder holder) {
+        int idItem = item.getIdProducto();
+        int itemPrecio = item.getPrecioSugerido();
+        int quantity = 0;
         holder._quantity.setMinValue(minValue);
         holder._quantity.setMaxValue(maxValue);
-
-        /** quantity = list.stream()
-         .filter(c -> item.getIdProducto().equals(c.getIdProducto()))
-         .count();**/
-
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getIdProducto() == item.getIdProducto()) {
+            if (list.get(i).getIdProducto() == idItem) {
                 quantity++;
             }
         }
+
         //remove other occurrences of the same product
         for (int i = position + 1; i < list.size(); i++) {
-            if (list.get(i).getIdProducto().equals(item.getIdProducto()))
+            if (list.get(i).getIdProducto().equals(idItem))
                 list.remove(i);
 
         }
@@ -109,42 +132,18 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
 
         holder._quantity.setValue(quantity);
         holder._quantity.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-
         holder._quantity.setWrapSelectorWheel(false);
 
-        holder._quantity.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                int oldTotal = item.getPrecioSugerido() * oldVal;
-                int newTotal = item.getPrecioSugerido() * newVal;
-                int tpint = 0;
-                String tp = VentasFragment.totalPriceView.getText().toString();
-                if (!(tp.equals("") || tp == null)) {
-                    tp = tp.replace(".", "");
-                    tp = tp.replace("$", "");
-                    tpint = Integer.parseInt(tp);
-                }
+        holder._quantity.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            int newTotal = itemPrecio * newVal;
+            int tpint = getTotalPriceInt();
 
-                tpint = tpint - oldTotal + newTotal;
+            tpint = tpint + itemPrecio* (newVal -oldVal);
 
-                VentasFragment.totalPriceView.setText("$" + format.format(tpint));
-                holder._price.setText("$" + format.format(newTotal));
-            }
+            this.TOTALP.setText(""+tpint);
+            holder._price.setText(""+newTotal);
+
         });
-
-        int total = item.getPrecioSugerido() * holder._quantity.getValue();
-        holder._price.setText("$" + format.format(total));
-        String tp = VentasFragment.totalPriceView.getText().toString();
-        int tpint = 0;
-        if (!(tp.equals("") || tp == null)) {
-            tp = tp.replace(".", "");
-            tp = tp.replace("$", "");
-            tpint = Integer.parseInt(tp);
-
-        }
-        tpint += total;
-        VentasFragment.totalPriceView.setText("$" + format.format(tpint));
-        return convertView;
     }
 
     static private class ViewHolder {
@@ -155,5 +154,16 @@ public class VentasAdapter extends ArrayAdapter<Productos> {
         TextView _prodName;
     }
 
+    private int getTotalPriceInt() {
+        String tp = this.TOTALP.getText().toString();
+        int tpint = 0;
+        if (!(tp.equals("") || tp == null)) {
+            tp = tp.replace(".", "");
+            tp = tp.replace("$", "");
+            tpint = Integer.parseInt(tp);
+
+        }
+        return tpint;
+    }
 
 }

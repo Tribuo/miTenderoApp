@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,7 @@ public class VentasFragment extends Fragment {
 
     private NumberFormat format;
 
-    public static int TOTALPRICE=0;
+    public static int TOTALPRICE = 0;
 
     public VentasFragment() {
     }
@@ -67,14 +69,16 @@ public class VentasFragment extends Fragment {
         ventasAdapter = new VentasAdapter(listaProductos, getContext());
 
         listView.setAdapter(ventasAdapter);
-        dummyList();
+
 
         int itemsCount = listView.getAdapter().getCount();
 
         format = NumberFormat.getInstance(new Locale(LOCALE));
 
-        totalPriceView = (TextView)ll.findViewById(R.id.total_price);
-        totalPriceView.setText("$" + format.format(TOTALPRICE));
+        totalPriceView = (TextView) ll.findViewById(R.id.total_price);
+        totalPriceView.setText("$"+TOTALPRICE);
+
+        dummyList();
         return ll;
 
     }
